@@ -1,0 +1,13 @@
+@import './../../assets/styles/colors';
+@import './../../assets/styles/shadow' ;
+
+.status-bar{
+    position: absolute;
+    bottom: 0;
+    width: calc( 100% - .6rem);
+    height: 2.2rem;
+    @include shadow;
+    padding: .3rem;
+    display: flex;
+    z-index: 1;
+}

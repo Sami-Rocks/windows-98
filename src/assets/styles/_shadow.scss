@@ -1,0 +1,6 @@
+@use './colors';
+
+@mixin shadow {
+    background: $grey;
+    box-shadow: 1px 1px 0 1px black, inset 1.5px 1.5px #C2C6CA, inset -1.5px -1.5px #85898d, inset 2.5px 2.5px white;
+}

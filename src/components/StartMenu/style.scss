@@ -1,0 +1,56 @@
+@import './../../assets/styles/colors';
+@import './../../assets/styles/shadow' ;
+
+.hide{
+    height: -0;
+    box-shadow: none;
+    // bottom: -50.8rem;
+    .windows-98 h1{
+        display: none !important;
+    }
+}
+
+.show{
+    height: 34rem;
+    @include shadow;
+}
+.start-menu{
+    bottom: 2.8rem;
+    transition: all .3s ease;
+    position: absolute;
+    left: 2px;
+    padding: .3rem .2rem;
+    width: fit-content;
+    width: 18rem;
+    z-index: 2;
+
+    display: flex;
+    
+    .windows-98{
+        width: 2.5rem;
+        color: $white;
+        background: $windows-blue;
+        background: linear-gradient(0deg, $windows-blue 0%, $black 100%);
+        display: flex;
+        align-items: flex-end;
+        position: relative;
+        
+        h1{
+            transform: rotate(-90deg);
+            font-weight: 900;
+            display: flex;
+            margin: 0;
+            position: absolute;
+            left: -70px;
+            bottom: 80px;
+
+            .light{
+                font-weight: 100;
+            }
+        }
+    }
+    .menu{
+        width: auto;
+    }
+}
+
