@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import StartMenu from '../../components/StartMenu'
 import StatusBar from '../../components/StatusBar'
+import Windows from '../../components/Windows'
 import { StartMenuContext } from '../../utilities/contexts'
 import './style.scss'
 
@@ -18,6 +19,7 @@ const Desktop = ()=>{
         <div className="desktop">
             <StartMenuContext.Provider value={{startMenu, setStartMenu}}>
                 <div className="background" onClick={closeStart} ></div>
+                <Windows />
                 <StartMenu set={startMenu}  />
                 <StatusBar />
             </StartMenuContext.Provider>

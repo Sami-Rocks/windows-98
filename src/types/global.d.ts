@@ -5,7 +5,5 @@ declare namespace globalThis{
         setStartMenu?:function;
     }
 
-    const defaults = {
-        startMenu: false
-    }
+   
 }

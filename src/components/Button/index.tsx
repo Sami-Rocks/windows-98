@@ -2,7 +2,7 @@ import "./style.scss"
 
 const Button = (props:any) =>{
     return(
-        <button className="button start-button" onClick={props.onClick} >
+        <button className={`button start-button ${props?.type} `} onClick={props.onClick} >
             <div className="dotted-outline">
                 {props.icon !== "" ? <img className="icon" src={props.icon} alt='icon'/>: ''}
                 {props?.title}

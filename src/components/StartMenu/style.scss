@@ -2,7 +2,7 @@
 @import './../../assets/styles/shadow' ;
 
 .hide{
-    height: -0;
+    height: 0;
     box-shadow: none;
     // bottom: -50.8rem;
     .windows-98 h1{
@@ -11,8 +11,9 @@
 }
 
 .show{
-    height: 34rem;
+    height: 24rem;
     @include shadow;
+    overflow: hidden;
 }
 .start-menu{
     bottom: 2.8rem;
@@ -20,10 +21,9 @@
     position: absolute;
     left: 2px;
     padding: .3rem .2rem;
-    width: fit-content;
     width: 18rem;
     z-index: 2;
-
+    overflow: hidden;
     display: flex;
     
     .windows-98{
@@ -51,6 +51,29 @@
     }
     .menu{
         width: auto;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
     }
 }
 
+.menu-item{
+    position: relative;
+    margin:.3rem .5rem;
+    cursor: pointer;
+    p{
+        font-weight: 600;
+    }
+    .item{
+        display: flex;
+        gap: 2px;
+        align-items: center;
+    }
+    .menu-image{
+        content: " ";
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}

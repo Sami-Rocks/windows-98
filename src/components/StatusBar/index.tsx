@@ -21,6 +21,10 @@ const StatusBar = () =>{
             <div className="start">
                 <Button title={"Start"} icon={StartIcon} onClick={toggleStartMenu}  />
             </div>
+            <div className="separator"></div>
+            <div className="buttons">
+                <Button icon="https://win98icons.alexmeub.com/icons/png/directory_open_cool-0.png" title="Window" type="status" /> 
+            </div>
         </div>
     )
 }

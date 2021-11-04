@@ -1,0 +1,57 @@
+@import './../../assets/styles/colors';
+@import './../../assets/styles/shadow' ;
+
+.window{
+    min-width: 20rem;
+    min-height: 20rem;
+    @include shadow;
+    position: absolute;
+
+    padding: 3px;
+
+    .title-bar{
+        color: $white;
+        padding: .5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: default;
+        p{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        img{
+            width: 25px;
+        }
+        .close-button{
+            padding: .5px 3px;
+
+            &:focus{
+                box-shadow: none;
+                background: $grey;
+            } 
+            &:active {
+                outline: none;
+                box-shadow: .5px .5px 0 .5px $black, .5px .5px $black, inset -.5px -.5px $black,  1px 1px $white, inset -1.5px -1.5px #85898d;
+                background: $light-grey;
+                .dotted-outline{
+                    border: 1px dotted $black ;
+        
+                }
+            }
+
+        }
+    }
+}
+
+.active{
+    .title-bar{
+        background:linear-gradient(90deg, $windows-blue 0%, rgba($color: $windows-blue, $alpha: .6) 100%);
+    }
+}
+.not-active{
+    .title-bar{
+        background: linear-gradient(90deg, $dark-grey 0%, rgba(0,0,0,.1) 100%);
+    }
+}
