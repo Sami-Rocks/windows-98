@@ -1,0 +1,14 @@
+.icons{
+    display: flex;
+    width: fit-content;
+    height: 100vh;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: .4rem;
+    gap: 10px;
+    align-items: flex-start;
+
+    .icon{
+        padding: .8rem .3rem;
+    }
+}
