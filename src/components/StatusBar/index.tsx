@@ -4,7 +4,7 @@ import StartIcon from "./../../assets/images/Windows-Logos-PNG-Image-48558.png"
 import { useContext } from "react";
 import { StartMenuContext } from "../../utilities/contexts";
 
-const StatusBar = () =>{
+const StatusBar = ({openWindows}:any) =>{
 
     const { startMenu, setStartMenu } = useContext(StartMenuContext)
 
@@ -23,7 +23,11 @@ const StatusBar = () =>{
             </div>
             <div className="separator"></div>
             <div className="buttons">
-                <Button icon="https://win98icons.alexmeub.com/icons/png/directory_open_cool-0.png" title="Window" type="status" /> 
+                {
+                    openWindows.map((el:any)=>(
+                        <Button icon={el.image} title={el.name} type="status" /> 
+                    ))
+                }
             </div>
         </div>
     )
