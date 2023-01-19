@@ -1,4 +1,4 @@
-export const IconsArray = [
+const DesktopFiles = [
     {
         id: 1,
         name: "My Computer",
@@ -31,3 +31,5 @@ export const IconsArray = [
     },
    
 ] 
+
+export default DesktopFiles

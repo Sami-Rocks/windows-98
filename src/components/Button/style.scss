@@ -39,3 +39,13 @@
         gap: 10px;
     }
 }
+
+.active {
+    outline: none;
+    box-shadow: inset 1px 1px 0 1px rgba($color: $black,$alpha: .4), inset 1px 1px rgba($color: $black,$alpha: .4),  -1px -1px rgba($color: $black,$alpha: .4),  2px 2px $white, -2.5px -2.5px #85898d;
+    background: $light-grey;
+    .dotted-outline{
+        border: 1px dotted $black ;
+        
+    }
+}

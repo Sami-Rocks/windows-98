@@ -5,5 +5,11 @@ declare namespace globalThis{
         setStartMenu?:function;
     }
 
+    type FileType = {
+        id:number,
+        name:string,
+        image:string
+    }
+
    
 }

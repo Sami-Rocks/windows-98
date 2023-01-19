@@ -1,11 +1,19 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import "./style.scss"
+import { ActiveWindowContext } from "../../utilities/contexts"
 
-const Windows = ({window, close}:any) =>{
+type WindowType = {
+    file: FileType,
+    close:Function
+}
+
+const Windows = ({file, close}:WindowType) =>{
+
+    const { activeWindow, setActiveWindow} = useContext(ActiveWindowContext)
 
     const defaultStyle={
-        left: 100 + Math.floor(Math.random() * 900),
-        top: 40+ Math.floor(Math.random() * 600)
+        left: 20 + Math.floor(Math.random() * 500),
+        top: 20+ Math.floor(Math.random() * 400)
     }
 
     const [diffX, setDiffX] = useState(0)
@@ -35,11 +43,11 @@ const Windows = ({window, close}:any) =>{
 
 
     return(
-        <div className="window active" style={style} >
+        <div className={`window ${activeWindow.name === file.name ? 'active': 'not-active'}`} onMouseDown={()=>setActiveWindow(file)} style={style} >
            <div className="title-bar" onMouseDown={(e)=>dragStart(e)} onMouseMove={(e)=>dragging(e)} onMouseUp={(e)=>dragEnd(e)} >
                <p>
-                   <img src={window.image} alt="window" />
-                   {window.name}
+                   <img src={file.image} alt="window" />
+                   {file.name}
                 </p>
                <button className="button close-button" onClick={()=>close(false)} >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">

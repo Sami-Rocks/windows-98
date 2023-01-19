@@ -1,11 +1,22 @@
+import { MouseEventHandler } from "react"
 import "./style.scss"
 
-const Button = (props:any) =>{
+type ButtonType = {
+    file?:FileType,
+    type?:'status',
+    onClick:MouseEventHandler<HTMLButtonElement>,
+    title?:string,
+    icon?:string,
+    active?:boolean
+}
+
+const Button = ({file, title, type, onClick, icon, active}:ButtonType) =>{
     return(
-        <button className={`button start-button ${props?.type} `} onClick={props.onClick} >
+        <button className={`button start-button ${type} ${active && 'active'} `} onClick={onClick} >
             <div className="dotted-outline">
-                {props.icon !== "" ? <img className="icon" src={props.icon} alt='icon'/>: ''}
-                {props?.title}
+                {icon ? <img className="icon" src={icon} alt='icon'/>: ''}
+                {file ? <img className="icon" src={file.image} alt='icon'/>: ''}
+                {title || file?.name}
             </div>
         </button>
     )

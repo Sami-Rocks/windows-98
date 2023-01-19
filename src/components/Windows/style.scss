@@ -46,6 +46,8 @@
 }
 
 .active{
+    // position: relative;
+    z-index: 1000;
     .title-bar{
         background: $windows-blue;
     }
