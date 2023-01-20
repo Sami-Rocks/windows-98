@@ -11,39 +11,39 @@
 }
 
 .show{
-    height: 24rem;
+    height: 300px;
     @include shadow;
     overflow: hidden;
 }
 .start-menu{
-    bottom: 2.8rem;
+    bottom: 32.5px;
     transition: all .3s ease;
     position: absolute;
-    left: 2px;
+    left: 1px;
     padding: .3rem .2rem;
-    width: 18rem;
+    width: 230px;
     z-index: 2;
     overflow: hidden;
     display: flex;
     
     .windows-98{
-        width: 2.5rem;
+        width: 30px;
         color: $white;
         background: $windows-blue;
         background: linear-gradient(0deg, $windows-blue 0%, $black 100%);
         display: flex;
         align-items: flex-end;
         position: relative;
-        
+        font-size: 14px;
         h1{
             transform: rotate(-90deg);
             font-weight: 900;
             display: flex;
             margin: 0;
             position: absolute;
-            left: -70px;
+            left: -65px;
             bottom: 80px;
-
+            
             .light{
                 font-weight: 100;
             }
@@ -61,10 +61,11 @@
 
 .menu-item{
     position: relative;
-    margin:.3rem .5rem;
+    margin:2px 5px;
     cursor: pointer;
     p{
         font-weight: 600;
+        font-size: 12px;
     }
     .item{
         display: flex;
@@ -73,7 +74,7 @@
     }
     .menu-image{
         content: " ";
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 30px;
+        height: 30px;
     }
 }
