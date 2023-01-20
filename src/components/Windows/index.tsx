@@ -1,6 +1,8 @@
 import { useContext, useState } from "react"
 import "./style.scss"
 import { ActiveWindowContext } from "../../utilities/contexts"
+import { fileBar } from "../../utilities/constants"
+import Button from "../Button"
 
 type WindowType = {
     file: FileType,
@@ -55,8 +57,19 @@ const Windows = ({file, close}:WindowType) =>{
                     </svg>
                </button>
            </div>
+
+           <div className="file-bar bar" >
+                {
+                    fileBar.map((el:any)=>(
+                        <button className="bar-item" >
+                            {el.title}
+                        </button>
+                    ))
+                }
+           </div>
+
            <div className="content">
-               <p></p>
+
            </div>
         </div>
     )

@@ -7,7 +7,7 @@
     @include shadow;
     position: absolute;
 
-    padding: 3px;
+    padding: 2px;
 
     .title-bar{
         color: $white;
@@ -44,6 +44,41 @@
 
         }
     }
+
+    .bar{
+        @include shadow;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        font-size: 15px;
+        padding: 6px 6px;
+
+        .bar-item{
+                background: none;
+                border: none;
+                padding: 2px;
+                &:first-letter 
+                {
+                text-decoration:underline;
+                }
+                &:hover{
+                    box-shadow: 1px 1px 0 rgb(128, 128, 128) inset, -1px -1px 0 rgb(255, 255, 255) inset;
+                    // box-shadow: .1px .1px 0 .1px rgba($color: $black,$alpha: .4), inset 1px 1px rgba($color: $black,$alpha: .4),  -1px -1px rgba($color: $black,$alpha: .4),  2px 2px $white, -2.5px -2.5px #85898d;
+                }
+            &:active{
+                box-shadow: inset .5px .5px 0 .5px rgba($color: $black,$alpha: .4), inset 1px 1px rgba($color: $black,$alpha: .4),  -1px -1px rgba($color: $black,$alpha: .4),  2px 2px $white, -2.5px -2.5px #85898d;
+                outline: none;
+                // background: $light-grey;
+            }
+        }
+    }
+
+    .content{
+        background-color: $white;
+        width: auto;
+        height: 500px;
+        margin: 3px;
+    }
 }
 
 .active{
@@ -51,6 +86,7 @@
     z-index: 1000;
     .title-bar{
         background: $windows-blue;
+        background: linear-gradient(90deg, $windows-blue 0%, #1C7BCB 100%) ;
     }
 }
 .not-active{

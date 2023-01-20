@@ -4,7 +4,7 @@ import "./style.scss"
 type ButtonType = {
     file?:FileType,
     type?:'status',
-    onClick:MouseEventHandler<HTMLButtonElement>,
+    onClick?:MouseEventHandler<HTMLButtonElement>,
     title?:string,
     icon?:string,
     active?:boolean
