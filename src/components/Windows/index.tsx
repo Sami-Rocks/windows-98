@@ -1,78 +1,91 @@
-import { useContext, useState } from "react"
-import "./style.scss"
-import { ActiveWindowContext } from "../../utilities/contexts"
-import { fileBar } from "../../utilities/constants"
-import Button from "../Button"
+// Modules
+import { CSSProperties, MouseEvent as ReactMouseEvent, useContext, useState } from 'react'
+
+// Components
+import FileBar from './components/FileBar'
+import TitleBar from './components/TitleBar'
+import WindowContent from './components/WindowContent'
+
+// Context
+import { ActiveWindowContext } from '../../utilities/contexts'
+
+// Styles
+import './style.scss'
 
 type WindowType = {
-    file: FileType,
-    close:Function
+	close: () => void,
+	file: FileType
 }
 
-const Windows = ({file, close}:WindowType) =>{
+type WindowPosition = CSSProperties & {
+	left: number,
+	top: number
+}
 
-    const { activeWindow, setActiveWindow} = useContext(ActiveWindowContext)
+type DragDifference = {
+	x: number,
+	y: number
+}
 
-    const defaultStyle={
-        left: 20 + Math.floor(Math.random() * 500),
-        top: 20+ Math.floor(Math.random() * 400)
-    }
+// Component: Windows
+function Windows ({ close, file }: WindowType) {
+	// Context
+	const { activeWindow, setActiveWindow } = useContext(ActiveWindowContext)
 
-    const [diffX, setDiffX] = useState(0)
-    const [diffY, setDiffY] = useState(0)
-    const [_dragging, setDragging] = useState(false)
-    const [style, setStyle] = useState(defaultStyle)
+	// State
+	const [dragDifference, setDragDifference] = useState<DragDifference>({
+		x: 0,
+		y: 0
+	})
+	const [isDragging, setIsDragging] = useState(false)
+	const [style, setStyle] = useState<WindowPosition>(() => ({
+		left: 20 + Math.floor(Math.random() * 500),
+		top: 20 + Math.floor(Math.random() * 400)
+	}))
 
-    const dragStart = (e:any) => {
-        setDiffX(e.screenX - e.currentTarget.getBoundingClientRect().left)
-        setDiffY(e.screenY - e.currentTarget.getBoundingClientRect().top)
-        setDragging(true)
-    }
-    const dragging = (e:any) => {
-        if(_dragging){
-            let left = e.screenX - diffX
-            let top = e.screenY - diffY
+	// Data
+	const isActive = activeWindow?.id === file.id
 
-            setStyle({
-                left: left,
-                top: top
-            })
-        }
-    }
-    const dragEnd = (e:any) => {
-        setDragging(false)
-    }
+	// Functions
+	function dragStart (event: ReactMouseEvent<HTMLDivElement>) {
+		const box = event.currentTarget.getBoundingClientRect()
 
+		setDragDifference({
+			x: event.screenX - box.left,
+			y: event.screenY - box.top
+		})
+		setIsDragging(true)
+	}
 
-    return(
-        <div className={`window ${activeWindow.name === file.name ? 'active': 'not-active'}`} onMouseDown={()=>setActiveWindow(file)} style={style} >
-           <div className="title-bar" onMouseDown={(e)=>dragStart(e)} onMouseMove={(e)=>dragging(e)} onMouseUp={(e)=>dragEnd(e)} >
-               <p>
-                   <img src={file.image} alt="window" />
-                   {file.name}
-                </p>
-               <button className="button close-button" onClick={()=>close(false)} >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
-                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>
-               </button>
-           </div>
+	function dragWindow (event: ReactMouseEvent<HTMLDivElement>) {
+		if (!isDragging) return
 
-           <div className="file-bar bar" >
-                {
-                    fileBar.map((el:any)=>(
-                        <button className="bar-item" >
-                            {el.title}
-                        </button>
-                    ))
-                }
-           </div>
+		setStyle({
+			left: event.screenX - dragDifference.x,
+			top: event.screenY - dragDifference.y
+		})
+	}
 
-           <div className="content">
+	function dragEnd () {
+		setIsDragging(false)
+	}
 
-           </div>
-        </div>
-    )
+	// Render
+	return (
+		<div
+			className={`window ${isActive ? 'active' : 'not-active'}`}
+			onMouseDown={() => setActiveWindow(file)}
+			style={style}>
+			<TitleBar
+				file={file}
+				onClose={close}
+				onDragEnd={dragEnd}
+				onDragMove={dragWindow}
+				onDragStart={dragStart} />
+			<FileBar />
+			<WindowContent />
+		</div>
+	)
 }
 
 export default Windows

@@ -2,79 +2,79 @@
 @import './../../assets/styles/shadow' ;
 
 .hide{
-    height: 0;
-    box-shadow: none;
-    // bottom: -50.8rem;
-    .windows-98 h1{
-        display: none !important;
-    }
+	height: 0;
+	box-shadow: none;
+	// bottom: -50.8rem;
+	.windows-98 h1{
+		display: none !important;
+	}
 }
 
 .show{
-    height: 300px;
-    @include shadow;
-    overflow: hidden;
+	height: 300px;
+	@include shadow;
+	overflow: hidden;
 }
 .start-menu{
-    bottom: 32.5px;
-    transition: all .3s ease;
-    position: absolute;
-    left: 1px;
-    padding: .3rem .2rem;
-    width: 230px;
-    z-index: 2;
-    overflow: hidden;
-    display: flex;
-    
-    .windows-98{
-        width: 30px;
-        color: $white;
-        background: $windows-blue;
-        background: linear-gradient(0deg, $windows-blue 0%, $black 100%);
-        display: flex;
-        align-items: flex-end;
-        position: relative;
-        font-size: 14px;
-        h1{
-            transform: rotate(-90deg);
-            font-weight: 900;
-            display: flex;
-            margin: 0;
-            position: absolute;
-            left: -65px;
-            bottom: 80px;
-            
-            .light{
-                font-weight: 100;
-            }
-        }
-    }
-    .menu{
-        width: auto;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-    }
+	bottom: 32.5px;
+	transition: all .3s ease;
+	position: absolute;
+	left: 1px;
+	padding: .3rem .2rem;
+	width: 230px;
+	z-index: 2;
+	overflow: hidden;
+	display: flex;
+	
+	.windows-98{
+		width: 30px;
+		color: $white;
+		background: $windows-blue;
+		background: linear-gradient(0deg, $windows-blue 0%, $black 100%);
+		display: flex;
+		align-items: flex-end;
+		position: relative;
+		font-size: 14px;
+		h1{
+			transform: rotate(-90deg);
+			font-weight: 900;
+			display: flex;
+			margin: 0;
+			position: absolute;
+			left: -65px;
+			bottom: 80px;
+			
+			.light{
+				font-weight: 100;
+			}
+		}
+	}
+	.menu{
+		width: auto;
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+	}
 }
 
 .menu-item{
-    position: relative;
-    margin:2px 5px;
-    cursor: pointer;
-    p{
-        font-weight: 600;
-        font-size: 12px;
-    }
-    .item{
-        display: flex;
-        gap: 2px;
-        align-items: center;
-    }
-    .menu-image{
-        content: " ";
-        width: 30px;
-        height: 30px;
-    }
+	position: relative;
+	margin:2px 5px;
+	cursor: pointer;
+	p{
+		font-weight: 600;
+		font-size: 12px;
+	}
+	.item{
+		display: flex;
+		gap: 2px;
+		align-items: center;
+	}
+	.menu-image{
+		content: " ";
+		width: 30px;
+		height: 30px;
+	}
 }
