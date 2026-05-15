@@ -2,7 +2,7 @@
 function WindowContent () {
 	// Render
 	return (
-		<div className="content"></div>
+		<div className="content" />
 	)
 }
 

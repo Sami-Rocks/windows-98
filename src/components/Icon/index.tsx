@@ -2,11 +2,11 @@ import { MouseEventHandler } from 'react'
 import './style.scss'
 
 type IconType = {
-	file:FileType,
-	onClick:MouseEventHandler<HTMLButtonElement>
+	file: FileType,
+	onClick: MouseEventHandler<HTMLButtonElement>
 }
 
-const Icon = ({ file, onClick }:IconType) =>{
+const Icon = ({ file, onClick }: IconType) => {
 
 	return (
 		<button className="icon icon-button" onDoubleClick={onClick} >

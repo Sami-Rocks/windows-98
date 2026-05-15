@@ -1,14 +1,14 @@
 declare namespace globalThis{
 
 	interface IStartMenuContext{
-		startMenu:boolean,
-		setStartMenu?:function;
+		startMenu: boolean,
+		setStartMenu?: function;
 	}
 
 	type FileType = {
-		id:number,
-		name:string,
-		image:string
+		id: number,
+		name: string,
+		image: string
 	}
 
 }

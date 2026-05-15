@@ -136,9 +136,16 @@
 				"warn",
 				{
 					"before": false,
-					"after": true
+					"after": true,
+					"overrides": {
+						"arrow": {
+							"before": true,
+							"after": true
+						}
+					}
 				}
 			],
+			"@typescript-eslint/space-infix-ops": "warn",
 			"space-infix-ops": "warn"
 		}
 	},
