@@ -1,5 +1,5 @@
 // Modules
-import { CSSProperties, MouseEvent as ReactMouseEvent, useContext, useState } from 'react'
+import { CSSProperties, MouseEvent as ReactMouseEvent, useContext, useEffect, useState } from 'react'
 
 // Components
 import FileBar from './components/FileBar'
@@ -14,7 +14,11 @@ import './style.scss'
 
 type WindowType = {
 	close: () => void,
-	file: FileType
+	file: FileType,
+	onActivate: (file: FileType) => void,
+	onMaximize: () => void,
+	onMinimize: () => void,
+	openWindow: (file: FileType) => void
 }
 
 type WindowPosition = CSSProperties & {
@@ -28,9 +32,9 @@ type DragDifference = {
 }
 
 // Component: Windows
-function Windows ({ close, file }: WindowType) {
+function Windows ({ close, file, onActivate, onMaximize, onMinimize, openWindow }: WindowType) {
 	// Context
-	const { activeWindow, setActiveWindow } = useContext(ActiveWindowContext)
+	const { activeWindow } = useContext(ActiveWindowContext)
 
 	// State
 	const [dragDifference, setDragDifference] = useState<DragDifference>({
@@ -45,45 +49,76 @@ function Windows ({ close, file }: WindowType) {
 
 	// Data
 	const isActive = activeWindow?.id === file.id
+	const isExplorerWindow = ['about', 'projects', 'experiments'].includes(file.type)
+	const isClassicWindow = ['about', 'projects', 'experiments', 'contact', 'links'].includes(file.type)
+	const isNotepadWindow = file.type === 'resume'
 
 	// Functions
 	function dragStart (event: ReactMouseEvent<HTMLDivElement>) {
+		if (file.isMaximized) return
+
 		const box = event.currentTarget.getBoundingClientRect()
 
+		event.preventDefault()
 		setDragDifference({
-			x: event.screenX - box.left,
-			y: event.screenY - box.top
+			x: event.clientX - box.left,
+			y: event.clientY - box.top
 		})
 		setIsDragging(true)
-	}
-
-	function dragWindow (event: ReactMouseEvent<HTMLDivElement>) {
-		if (!isDragging) return
-
-		setStyle({
-			left: event.screenX - dragDifference.x,
-			top: event.screenY - dragDifference.y
-		})
 	}
 
 	function dragEnd () {
 		setIsDragging(false)
 	}
 
+	// Effects
+	useEffect(() => {
+		if (!isDragging) return
+
+		function dragWindow (event: MouseEvent) {
+			setStyle({
+				left: event.clientX - dragDifference.x,
+				top: event.clientY - dragDifference.y
+			})
+		}
+
+		document.addEventListener('mousemove', dragWindow)
+		document.addEventListener('mouseup', dragEnd)
+
+		return () => {
+			document.removeEventListener('mousemove', dragWindow)
+			document.removeEventListener('mouseup', dragEnd)
+		}
+	}, [dragDifference, isDragging])
+
+	function stopDrag () {
+		dragEnd()
+	}
+
+	function noop () {
+		return undefined
+	}
+
+	if (file.isMinimized) return null
+
 	// Render
 	return (
 		<div
-			className={`window ${isActive ? 'active' : 'not-active'}`}
-			onMouseDown={() => setActiveWindow(file)}
+			className={`window ${isActive ? 'active' : 'not-active'} ${isClassicWindow ? 'classic-window' : ''} ${isExplorerWindow ? 'explorer-window' : ''} ${isNotepadWindow ? 'notepad-window' : ''} ${file.isMaximized ? 'maximized' : ''}`}
+			onMouseDown={() => onActivate(file)}
 			style={style}>
 			<TitleBar
 				file={file}
 				onClose={close}
-				onDragEnd={dragEnd}
-				onDragMove={dragWindow}
-				onDragStart={dragStart} />
-			<FileBar />
-			<WindowContent />
+				onDragEnd={stopDrag}
+				onDragMove={noop}
+				onDragStart={dragStart}
+				onMaximize={onMaximize}
+				onMinimize={onMinimize} />
+			<FileBar file={file} />
+			<WindowContent
+				file={file}
+				openWindow={openWindow} />
 		</div>
 	)
 }

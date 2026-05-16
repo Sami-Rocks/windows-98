@@ -11,8 +11,10 @@ type ButtonType = {
 }
 
 const Button = ({ file, title, type, onClick, icon, active }: ButtonType) => {
+	const className = ['button', 'start-button', type, active ? 'active' : ''].filter(Boolean).join(' ')
+
 	return (
-		<button className={`button start-button ${type} ${active && 'active'} `} onClick={onClick} >
+		<button className={className} onClick={onClick} >
 			<div className="dotted-outline">
 				{icon ? <img className="icon" src={icon} alt='icon' /> : ''}
 				{file ? <img className="icon" src={file.image} alt='icon' /> : ''}

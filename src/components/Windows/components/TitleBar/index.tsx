@@ -1,20 +1,43 @@
 // Modules
-import { MouseEventHandler } from 'react'
+import { MouseEvent, MouseEventHandler } from 'react'
 
 type TitleBarType = {
 	file: FileType,
 	onClose: () => void,
 	onDragEnd: MouseEventHandler<HTMLDivElement>,
 	onDragMove: MouseEventHandler<HTMLDivElement>,
-	onDragStart: MouseEventHandler<HTMLDivElement>
+	onDragStart: MouseEventHandler<HTMLDivElement>,
+	onMaximize: () => void,
+	onMinimize: () => void
 }
 
 // Component: Windows > Title bar
-function TitleBar ({ file, onClose, onDragEnd, onDragMove, onDragStart }: TitleBarType) {
+function TitleBar ({ file, onClose, onDragEnd, onDragMove, onDragStart, onMaximize, onMinimize }: TitleBarType) {
+	// Functions
+	function stopControlDrag (event: MouseEvent<HTMLButtonElement>) {
+		event.stopPropagation()
+	}
+
+	function minimizeWindow (event: MouseEvent<HTMLButtonElement>) {
+		event.stopPropagation()
+		onMinimize()
+	}
+
+	function maximizeWindow (event: MouseEvent<HTMLButtonElement>) {
+		event.stopPropagation()
+		onMaximize()
+	}
+
+	function closeWindow (event: MouseEvent<HTMLButtonElement>) {
+		event.stopPropagation()
+		onClose()
+	}
+
 	// Render
 	return (
 		<div
 			className="title-bar"
+			onDoubleClick={onMaximize}
 			onMouseDown={onDragStart}
 			onMouseMove={onDragMove}
 			onMouseUp={onDragEnd}>
@@ -24,19 +47,29 @@ function TitleBar ({ file, onClose, onDragEnd, onDragMove, onDragStart }: TitleB
 					alt="window" />
 				{file.name}
 			</p>
-			<button
-				className="button close-button"
-				onClick={onClose}>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					fill="currentColor"
-					className="bi bi-x"
-					viewBox="0 0 16 16">
-					<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-				</svg>
-			</button>
+			<div className="window-controls">
+				<button
+					className="button control-button"
+					onMouseDown={stopControlDrag}
+					onClick={minimizeWindow}
+					type="button">
+					<span className="minimize-icon" />
+				</button>
+				<button
+					className="button control-button"
+					onMouseDown={stopControlDrag}
+					onClick={maximizeWindow}
+					type="button">
+					<span className={file.isMaximized ? 'restore-icon' : 'maximize-icon'} />
+				</button>
+				<button
+					className="button control-button close-button"
+					onMouseDown={stopControlDrag}
+					onClick={closeWindow}
+					type="button">
+					<span className="close-icon" />
+				</button>
+			</div>
 		</div>
 	)
 }

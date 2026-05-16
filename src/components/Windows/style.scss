@@ -1,13 +1,43 @@
 @import './../../assets/styles/colors';
 @import './../../assets/styles/shadow';
 
+@mixin explorer-strip {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	background: $grey;
+	border-top: 1px solid $white;
+	border-right: none;
+	border-bottom: 1px solid #808080;
+	border-left: none;
+	box-shadow: inset 0 1px $light-grey;
+}
+
 // Style: Windows
 .window {
+	display: flex;
+	width: 800px;
 	min-width: 800px;
+	height: 560px;
 	min-height: 500px;
+	flex-direction: column;
 	position: absolute;
+	overflow: hidden;
 	padding: 2px;
+	resize: both;
 	@include shadow;
+
+	&.maximized {
+		top: 0 !important;
+		right: 0;
+		bottom: 31px;
+		left: 0 !important;
+		width: auto !important;
+		height: auto !important;
+		min-width: 0;
+		min-height: 0;
+		resize: none;
+	}
 
 	.title-bar {
 		display: flex;
@@ -26,6 +56,88 @@
 
 		img {
 			width: 18px;
+		}
+
+		.window-controls {
+			display: flex;
+			gap: 2px;
+		}
+
+		.control-button {
+			display: grid;
+			width: 18px;
+			height: 16px;
+			place-items: center;
+			padding: 0;
+			color: $black;
+			background: $grey;
+			@include shadow;
+		}
+
+		.minimize-icon {
+			width: 8px;
+			height: 2px;
+			margin-top: 8px;
+			background: $black;
+		}
+
+		.maximize-icon {
+			width: 9px;
+			height: 8px;
+			border: 1px solid $black;
+			border-top-width: 2px;
+		}
+
+		.restore-icon {
+			position: relative;
+			width: 11px;
+			height: 10px;
+
+			&:before,
+			&:after {
+				position: absolute;
+				width: 8px;
+				height: 7px;
+				border: 1px solid $black;
+				border-top-width: 2px;
+				background: $grey;
+				content: "";
+			}
+
+			&:before {
+				top: 0;
+				right: 0;
+			}
+
+			&:after {
+				bottom: 0;
+				left: 0;
+			}
+		}
+
+		.close-icon {
+			position: relative;
+			width: 10px;
+			height: 10px;
+
+			&:before,
+			&:after {
+				position: absolute;
+				top: 4px;
+				left: 0;
+				width: 11px;
+				height: 2px;
+				background: $black;
+				content: "";
+			}
+
+			&:before {
+				transform: rotate(45deg);
+			}
+
+			&:after {
+				transform: rotate(-45deg);
+			}
 		}
 
 		.close-button {
@@ -49,15 +161,16 @@
 	}
 
 	.bar {
-		display: flex;
-		flex-direction: row;
-		gap: 10px;
-		padding: 6px 6px;
-		font-size: 15px;
+		min-height: 21px;
+		gap: 12px;
+		margin: 1px 3px 0;
+		padding: 1px 8px;
+		background: $grey;
+		font-size: 12px;
 		@include shadow;
 
 		.bar-item {
-			padding: 2px;
+			padding: 1px 2px;
 			background: none;
 			border: none;
 
@@ -76,11 +189,668 @@
 		}
 	}
 
+	&.classic-window {
+		.bar {
+			@include explorer-strip;
+			margin: 1px 3px 0;
+			box-shadow: inset 0 1px $light-grey;
+		}
+
+		.content {
+			margin: 0 3px 3px;
+			overflow: hidden;
+			border: none;
+			background: $white;
+		}
+
+		.content .program-toolbar,
+		.content .address-bar {
+			@include explorer-strip;
+			border-right: none;
+			border-left: none;
+		}
+
+		.content .program-toolbar {
+			min-height: 48px;
+			gap: 0;
+			padding: 1px 4px;
+
+			.toolbar-button {
+				min-width: 62px;
+				height: 43px;
+			}
+
+			.toolbar-separator {
+				height: 46px;
+			}
+		}
+	}
+
+	&.explorer-window {
+		.title-bar {
+			min-height: 18px;
+			padding: 2px 3px;
+
+			p {
+				gap: 4px;
+				font-size: 12px;
+				font-weight: 900;
+			}
+
+			img {
+				width: 16px;
+				height: 16px;
+				object-fit: contain;
+			}
+
+			.control-button {
+				width: 17px;
+				height: 15px;
+			}
+
+			.close-button {
+				padding: 0;
+			}
+		}
+	}
+
+	&.notepad-window {
+		.content {
+			margin-top: 0;
+		}
+	}
+
 	.content {
+		flex: 1;
+		min-height: 0;
 		background-color: $white;
 		width: auto;
-		height: 500px;
 		margin: 3px;
+		overflow: auto;
+
+		.program {
+			display: flex;
+			width: 100%;
+			height: 100%;
+			flex-direction: column;
+			color: $black;
+			font-size: 13px;
+		}
+
+		.explorer-program {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+		}
+
+		.program-toolbar {
+			display: flex;
+			align-items: center;
+			background: $light-grey;
+			min-height: 52px;
+			gap: 2px;
+			padding: 4px;
+			border-bottom: 1px solid $dark-grey;
+		}
+
+		.explorer-program .program-toolbar {
+			min-height: 48px;
+			gap: 0;
+			padding: 1px 4px;
+
+			.toolbar-button {
+				min-width: 62px;
+				height: 43px;
+			}
+
+			.toolbar-separator {
+				height: 46px;
+			}
+		}
+
+		.explorer-program .address-bar {
+			min-height: 22px;
+			margin: 0;
+			padding: 2px 4px;
+		}
+
+		.toolbar-button {
+			display: flex;
+			min-width: 54px;
+			height: 44px;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 3px;
+			padding: 3px 4px 2px;
+			border: 1px solid transparent;
+			background: transparent;
+			font-size: 11px;
+			line-height: 12px;
+
+			&:disabled {
+				color: $dark-grey;
+			}
+
+			&:disabled .toolbar-icon {
+				filter: grayscale(1);
+				opacity: .45;
+			}
+
+			&:disabled:hover {
+				border-color: transparent;
+			}
+
+			&:hover {
+				border-color: $white $dark-grey $dark-grey $white;
+			}
+
+			&:active {
+				border-color: $dark-grey $white $white $dark-grey;
+			}
+		}
+
+		.toolbar-icon {
+			display: block;
+			flex: 0 0 20px;
+			width: 20px;
+			height: 20px;
+			background-image: url("./../../assets/images/browse-ui-icons.png");
+			background-repeat: no-repeat;
+			image-rendering: pixelated;
+		}
+
+		.icon-back {
+			background-position: 0 0;
+		}
+
+		.icon-forward {
+			background-position: -20px 0;
+		}
+
+		.icon-stop {
+			background-position: -40px 0;
+		}
+
+		.icon-refresh {
+			background-position: -60px 0;
+		}
+
+		.icon-home {
+			background-position: -80px 0;
+		}
+
+		.icon-up {
+			background-position: -100px 0;
+		}
+
+		.icon-search {
+			background-position: -120px 0;
+		}
+
+		.icon-favorites {
+			background-position: -140px 0;
+		}
+
+		.icon-cut {
+			background-position: -500px 0;
+		}
+
+		.icon-copy {
+			background-position: -520px 0;
+		}
+
+		.icon-paste {
+			background-position: -540px 0;
+		}
+
+		.icon-views {
+			background-position: -1160px 0;
+		}
+
+		.icon-mail {
+			background-position: -640px 0;
+		}
+
+		.icon-reply {
+			background-position: -720px 0;
+		}
+
+		.icon-send {
+			background-position: -340px 0;
+		}
+
+		.icon-address-book {
+			background-position: -700px 0;
+		}
+
+		.icon-open {
+			background-position: -220px 0;
+		}
+
+		.icon-reader {
+			background-position: -880px 0;
+		}
+
+		.toolbar-separator {
+			width: 1px;
+			height: 42px;
+			margin: 0 3px;
+			background: $dark-grey;
+			box-shadow: 1px 0 $white;
+		}
+
+		.address-bar {
+			display: flex;
+			align-items: center;
+			gap: 2px;
+			padding: 2px 3px;
+			border-top: 1px solid $white;
+			border-bottom: 1px solid $dark-grey;
+			background: $light-grey;
+
+			span {
+				color: $dark-grey;
+				font-size: 11px;
+			}
+
+			.address-drive-icon {
+				width: 16px;
+				height: 12px;
+				border: 1px solid $dark-grey;
+				box-shadow: inset 1px 1px $white;
+				background: linear-gradient(180deg, $light-grey 0%, $light-grey 45%, $dark-grey 46%, $dark-grey 58%, $white 59%);
+			}
+
+			div,
+			input {
+				flex: 1;
+				padding: 2px 5px;
+				border: 1px solid $dark-grey;
+				box-shadow: inset 1px 1px $black, inset -1px -1px $white;
+				background: $white;
+				font-family: inherit;
+				font-size: 12px;
+			}
+
+			input {
+				min-width: 0;
+				outline: none;
+			}
+
+			button {
+				width: 18px;
+				height: 19px;
+				padding: 0;
+				border: none;
+				background: $grey;
+				font-size: 9px;
+				line-height: 18px;
+				@include shadow;
+			}
+		}
+
+		.explorer-body {
+			display: grid;
+			min-height: 0;
+			flex: 1;
+			grid-template-columns: 170px minmax(0, 1fr);
+			margin: 2px;
+			overflow: hidden;
+			border-top: 1px solid #808080;
+			border-right: 1px solid $white;
+			border-bottom: 1px solid $white;
+			border-left: 1px solid #808080;
+			box-shadow: inset 1px 1px $black, inset -1px -1px #DFDFDF;
+		}
+
+		.explorer-sidebar {
+			padding: 8px 18px;
+			overflow: hidden;
+			background: $white url("./../../assets/images/explorer-sidebar-bg.svg") left top / 100% 100% no-repeat;
+			background-position-y: -67px;
+			color: $black;
+
+			.folder-large-icon {
+				margin-bottom: 8px;
+			}
+
+			h2 {
+				margin: 8px 0 8px;
+				color: $black;
+				font-size: 1.55rem;
+				font-weight: 900;
+				line-height: 1.05;
+				word-break: break-word;
+			}
+
+			p {
+				margin: 0 0 .65rem;
+				font-size: 12px;
+				line-height: 1.3;
+			}
+		}
+
+		.drive-icon {
+			display: block;
+			width: 28px;
+			height: 14px;
+			margin-bottom: 8px;
+			border: 1px solid $dark-grey;
+			box-shadow: inset 1px 1px $white, inset -1px -1px $black;
+			background: $light-grey;
+
+			&:after {
+				display: block;
+				width: 8px;
+				height: 2px;
+				margin: 8px 0 0 15px;
+				background: #4ab44a;
+				content: "";
+			}
+		}
+
+		.sidebar-line {
+			height: 1px;
+			margin-bottom: 1rem;
+			background: #0073d1;
+		}
+
+		.explorer-main {
+			min-width: 0;
+			padding: 8px 14px;
+			overflow: auto;
+			background: $white;
+		}
+
+		.folder-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+			gap: 26px 14px;
+			align-items: start;
+		}
+
+		.folder-item {
+			display: flex;
+			min-height: 64px;
+			flex-direction: column;
+			align-items: center;
+			gap: 5px;
+			padding: 2px;
+			border: none;
+			background: transparent;
+			color: $black;
+			text-align: center;
+
+			span:last-child {
+				padding: 1px 2px;
+				font-size: 12px;
+				line-height: 1.15;
+			}
+
+			&:focus span:last-child,
+			&:hover span:last-child {
+				outline: 1px dotted $black;
+				background: $white;
+			}
+		}
+
+		.folder-large-icon {
+			display: block;
+			height: 32px;
+			width: 32px;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			image-rendering: pixelated;
+		}
+
+		.folder-large-icon.folder {
+			background-image: url("./../../assets/images/icon-folder.png");
+		}
+
+		.folder-large-icon.document {
+			background-image: url("./../../assets/images/icon-document.png");
+		}
+
+		.folder-large-icon.computer {
+			background-image: url("./../../assets/images/icon-computer.png");
+		}
+
+		.mail-row.selected {
+			background: $windows-blue;
+			color: $white;
+		}
+
+		.notepad-program {
+			background: $white;
+		}
+
+		.notepad-page {
+			flex: 1;
+			margin: 0;
+			padding: 8px;
+			overflow: auto;
+			border: 1px solid $dark-grey;
+			box-shadow: inset 1px 1px $black, inset -1px -1px $white;
+			background: $white;
+			font-family: "Courier New", monospace;
+			font-size: 14px;
+			line-height: 1.35;
+			white-space: pre-wrap;
+		}
+
+		.notepad-status,
+		.program-status {
+			display: flex;
+			min-height: 21px;
+			align-items: center;
+			justify-content: space-between;
+			padding: 2px 5px;
+			border-top: 1px solid $dark-grey;
+			background: $grey;
+			font-size: 11px;
+		}
+
+		.mail-body {
+			display: grid;
+			min-height: 0;
+			flex: 1;
+			grid-template-columns: 140px 230px minmax(0, 1fr);
+			border-top: 1px solid $white;
+		}
+
+		.mail-folders,
+		.mail-list,
+		.mail-preview {
+			overflow: auto;
+			border-right: 1px solid $dark-grey;
+			background: $white;
+		}
+
+		.mail-folders {
+			padding: 8px;
+			background: $light-grey;
+
+			h3 {
+				margin: 0 0 .5rem;
+			}
+
+			p {
+				margin: 0 0 .35rem;
+			}
+		}
+
+		.mail-row {
+			display: grid;
+			grid-template-columns: 80px 1fr;
+			gap: 6px;
+			padding: 5px;
+			border-bottom: 1px solid $light-grey;
+		}
+
+		.mail-head {
+			background: $light-grey;
+			font-weight: 900;
+		}
+
+		.mail-preview {
+			padding: 10px;
+			line-height: 1.4;
+		}
+
+		.compose-line {
+			margin-bottom: .35rem;
+			padding-bottom: .35rem;
+			border-bottom: 1px solid $light-grey;
+		}
+
+		.browser-frame {
+			position: relative;
+			flex: 1;
+			min-height: 0;
+			overflow: hidden;
+			border: 1px solid $dark-grey;
+			box-shadow: inset 1px 1px $black, inset -1px -1px $white;
+			background: $white;
+
+			iframe {
+				display: block;
+				width: 100%;
+				height: 100%;
+				border: none;
+				background: $white;
+			}
+		}
+
+		.browser-embed {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+
+		.browser-reader {
+			width: 100%;
+			height: 100%;
+
+			iframe {
+				display: block;
+				width: 100%;
+				height: 100%;
+				border: none;
+				background: $white;
+			}
+		}
+
+		.browser-fallback {
+			position: absolute;
+			right: 14px;
+			bottom: 14px;
+			max-width: 310px;
+			padding: .75rem;
+			border: 1px solid $dark-grey;
+			box-shadow: 1px 1px $white inset, -1px -1px $dark-grey inset;
+			background: $light-grey;
+			font-family: Arial, sans-serif;
+			font-size: 12px;
+
+			h2 {
+				margin: 0 0 .4rem;
+				font-size: 1rem;
+			}
+
+			p {
+				margin: 0 0 .6rem;
+			}
+
+			button {
+				max-width: 100%;
+				padding: .35rem .6rem;
+				overflow: hidden;
+				border: none;
+				background: $grey;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				@include shadow;
+			}
+		}
+
+		.browser-page {
+			width: 100%;
+			height: 100%;
+			flex: 1;
+			padding: 1rem;
+			overflow: auto;
+			background: $white;
+			font-family: Arial, sans-serif;
+		}
+
+		.browser-header {
+			margin-bottom: 1rem;
+			padding-bottom: .75rem;
+			border-bottom: 2px solid $windows-blue;
+
+			h1 {
+				margin: 0 0 .25rem;
+				color: $windows-blue;
+				font-size: 1.6rem;
+			}
+
+			p {
+				margin: 0;
+			}
+		}
+
+		.link-table {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: .65rem;
+
+			button {
+				display: flex;
+				flex-direction: column;
+				gap: .25rem;
+				padding: .65rem;
+				border: 1px solid $dark-grey;
+				color: $windows-blue;
+				background: #f5f5f5;
+				font-family: Arial, sans-serif;
+				text-align: left;
+				text-decoration: underline;
+			}
+		}
+
+		.large-icon-grid {
+			display: grid;
+			grid-template-columns: repeat(4, 90px);
+			gap: 18px;
+			padding: 12px;
+			text-align: center;
+
+			p {
+				margin: .35rem 0 0;
+			}
+		}
+
+		.folder-icon {
+			display: inline-block;
+			width: 36px;
+			height: 28px;
+			border: 1px solid #9b7b00;
+			background: #f3c742;
+
+			&:before {
+				display: block;
+				width: 18px;
+				height: 7px;
+				margin-top: -7px;
+				margin-left: 2px;
+				border: 1px solid #9b7b00;
+				border-bottom: none;
+				background: #f3c742;
+				content: "";
+			}
+		}
 	}
 }
 

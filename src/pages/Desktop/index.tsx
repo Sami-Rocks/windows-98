@@ -9,7 +9,7 @@ import './style.scss'
 const Desktop = () => {
 
 	const [startMenu, setStartMenu] = useState(false)
-	const [activeWindow, setActiveWindow] = useState<any>()
+	const [activeWindow, setActiveWindow] = useState<FileType>()
 	const [openWindows, setOpenWindows] = useState<Array<FileType>>([])
 
 	const closeStart = () => {
@@ -18,16 +18,92 @@ const Desktop = () => {
 		}
 	}
 
-	const openWindow = (file: FileType) => {
-		setActiveWindow(file)
-		setOpenWindows([...openWindows, file])
+	const getNextActiveWindow = (windows: Array<FileType>) => {
+		return [...windows].reverse().find(window => !window.isMinimized)
 	}
 
-	const closeWindow = (id: any) => {
-		const temp = [...openWindows]
-		const indx = temp.findIndex((el: any) => el.id === id)
-		temp.splice((indx), 1)
-		setOpenWindows(temp)
+	const openWindow = (file: FileType) => {
+		setOpenWindows(windows => {
+			const existingWindow = windows.find(window => window.id === file.id)
+
+			if (existingWindow) {
+				const activeFile = {
+					...existingWindow,
+					...file,
+					isMinimized: false
+				}
+
+				setActiveWindow(activeFile)
+				return windows.map(window => window.id === file.id ? activeFile : window)
+			}
+
+			const activeFile = {
+				...file,
+				isMaximized: false,
+				isMinimized: false
+			}
+
+			setActiveWindow(activeFile)
+			return [...windows, activeFile]
+		})
+	}
+
+	const closeWindow = (id: number) => {
+		setOpenWindows(windows => {
+			const remainingWindows = windows.filter(window => window.id !== id)
+
+			if (activeWindow?.id === id) {
+				setActiveWindow(getNextActiveWindow(remainingWindows))
+			}
+
+			return remainingWindows
+		})
+	}
+
+	const activateWindow = (file: FileType) => {
+		setOpenWindows(windows => {
+			const existingWindow = windows.find(window => window.id === file.id)
+			const activeFile = {
+				...(existingWindow || file),
+				isMinimized: false
+			}
+
+			setActiveWindow(activeFile)
+			return windows.map(window => window.id === file.id ? activeFile : window)
+		})
+	}
+
+	const minimizeWindow = (id: number) => {
+		setOpenWindows(windows => {
+			const nextWindows = windows.map(window => window.id === id ? {
+				...window,
+				isMinimized: true
+			} : window)
+
+			if (activeWindow?.id === id) {
+				setActiveWindow(getNextActiveWindow(nextWindows))
+			}
+
+			return nextWindows
+		})
+	}
+
+	const toggleMaximizeWindow = (id: number) => {
+		setOpenWindows(windows => {
+			const nextWindows = windows.map(window => {
+				if (window.id !== id) return window
+
+				return {
+					...window,
+					isMaximized: !window.isMaximized,
+					isMinimized: false
+				}
+			})
+			const activeFile = nextWindows.find(window => window.id === id)
+
+			setActiveWindow(activeFile)
+			return nextWindows
+		})
 	}
 
 	return (
@@ -36,13 +112,22 @@ const Desktop = () => {
 				<ActiveWindowContext.Provider value={{ activeWindow, setActiveWindow }} >
 					<div className="background" onClick={closeStart}  />
 					{
-						openWindows.map((el: any) => (
-							<Windows key={el.id} close={() => closeWindow(el.id)} file={el} />
+						openWindows.map(el => (
+							<Windows
+								key={el.id}
+								close={() => closeWindow(el.id)}
+								file={el}
+								onActivate={activateWindow}
+								onMaximize={() => toggleMaximizeWindow(el.id)}
+								onMinimize={() => minimizeWindow(el.id)}
+								openWindow={openWindow} />
 						))
 					}
 					<Icons openWindow={openWindow} />
 					<StartMenu set={startMenu} />
-					<StatusBar openWindows={openWindows} />
+					<StatusBar
+						onActivate={activateWindow}
+						openWindows={openWindows} />
 				</ActiveWindowContext.Provider>
 			</StartMenuContext.Provider>
 		</div>

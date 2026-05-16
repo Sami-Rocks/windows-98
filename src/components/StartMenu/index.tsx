@@ -1,6 +1,16 @@
 import './style.scss'
 
-const menus: Array<FileType> = [
+type MenuType = {
+	id: number,
+	image: string,
+	name: string
+}
+
+type MenuItemType = {
+	file: MenuType
+}
+
+const menus: Array<MenuType> = [
 	{
 		id: 1,
 		image: 'https://win98icons.alexmeub.com/icons/png/application_hourglass_small-2.png',
@@ -13,7 +23,7 @@ const menus: Array<FileType> = [
 	}
 ]
 
-const MenuItem = ({ file }: any) => {
+const MenuItem = ({ file }: MenuItemType) => {
 	return (
 		<div className="menu-item">
 			<div className="item">

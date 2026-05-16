@@ -1,8 +1,15 @@
 // Utilities
-import { fileBar } from '../../../../utilities/constants'
+import { getFileBar } from '../../../../utilities/constants'
+
+type FileBarType = {
+	file: FileType
+}
 
 // Component: Windows > File bar
-function FileBar () {
+function FileBar ({ file }: FileBarType) {
+	// Data
+	const fileBar = getFileBar(file.type)
+
 	// Render
 	return (
 		<div className="file-bar bar">
