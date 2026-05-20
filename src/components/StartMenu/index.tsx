@@ -38,7 +38,7 @@ const StartMenu = ({ set }: any) => {
 	return (
 		<div className={`start-menu ${set ? 'show' : 'hide'}`}>
 			<div className="windows-98">
-				<h1>Windows <span className="light" >98</span> </h1>
+				<h1>Samuel <span className="light">OS</span></h1>
 			</div>
 			<div className="menu">
 				{menus.map(el => {

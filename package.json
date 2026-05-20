@@ -1,5 +1,5 @@
 {
-	"name": "windows-98",
+	"name": "samuel-windows-98-portfolio",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
@@ -19,7 +19,7 @@
 	},
 	"scripts": {
 		"start": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
-		"build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+		"build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build && firebase deploy",
 		"test": "react-scripts test",
 		"lint": "eslint src --ext .js,.jsx,.ts,.tsx",
 		"eject": "react-scripts eject"

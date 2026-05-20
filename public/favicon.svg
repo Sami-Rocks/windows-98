@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+	<title>Samuel OS</title>
+	<rect width="32" height="32" fill="#008080" />
+	<rect x="4" y="5" width="24" height="20" fill="#bdbebd" />
+	<rect x="5" y="6" width="22" height="18" fill="#ffffff" />
+	<rect x="5" y="6" width="22" height="4" fill="#000080" />
+	<rect x="6" y="7" width="2" height="2" fill="#ffffff" />
+	<rect x="23" y="7" width="2" height="2" fill="#ffffff" />
+	<rect x="8" y="13" width="16" height="2" fill="#000000" />
+	<rect x="8" y="15" width="2" height="4" fill="#000000" />
+	<rect x="8" y="19" width="14" height="2" fill="#000000" />
+	<rect x="22" y="21" width="2" height="4" fill="#000000" />
+	<rect x="8" y="25" width="16" height="2" fill="#000000" />
+	<rect x="10" y="27" width="12" height="2" fill="#bdbebd" />
+	<rect x="13" y="25" width="6" height="4" fill="#7e7c7c" />
+</svg>

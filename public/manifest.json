@@ -1,25 +1,17 @@
 {
-	"short_name": "React App",
-	"name": "Create React App Sample",
+	"short_name": "Samuel OS",
+	"name": "Samuel Owusu-Aboagye Windows 98 Portfolio",
+	"description": "A Windows 98-inspired portfolio OS for Samuel Owusu-Aboagye's frontend engineering work, resume, projects, and contact details.",
 	"icons": [
 		{
-			"src": "favicon.ico",
-			"sizes": "64x64 32x32 24x24 16x16",
-			"type": "image/x-icon"
-		},
-		{
-			"src": "logo192.png",
-			"type": "image/png",
-			"sizes": "192x192"
-		},
-		{
-			"src": "logo512.png",
-			"type": "image/png",
-			"sizes": "512x512"
+			"src": "favicon.svg",
+			"type": "image/svg+xml",
+			"sizes": "any",
+			"purpose": "any maskable"
 		}
 	],
 	"start_url": ".",
 	"display": "standalone",
-	"theme_color": "#000000",
-	"background_color": "#ffffff"
+	"theme_color": "#008080",
+	"background_color": "#008080"
 }
