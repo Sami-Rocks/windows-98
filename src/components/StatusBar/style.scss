@@ -1,23 +1,29 @@
 @import './../../assets/styles/colors';
-@import './../../assets/styles/shadow' ;
+@import './../../assets/styles/shadow';
 
-.status-bar{
+// Style: Status bar
+.status-bar {
 	position: absolute;
 	bottom: 0;
-	width: calc( 100% - .6rem);
+	width: calc(100% - .6rem);
 	height: 22px;
-	@include shadow;
-	padding: 4px;
 	display: flex;
+	padding: 4px;
 	z-index: 1;
+	@include shadow;
 
-	.separator{
+	.separator {
 		margin: 0 7px;
 		width: 1px;
 		height: 100%;
-		box-shadow: inset 1px 1px 0 1px rgb(51, 51, 51),  1.5px 1.5px #e5e6e7, inset -1.5px -1.5px #85898d, inset 2.5px 2.5px white;
+		box-shadow:
+			inset 1px 1px 0 1px rgb(51, 51, 51),
+			1.5px 1.5px #e5e6e7,
+			inset -1.5px -1.5px #85898d,
+			inset 2.5px 2.5px white;
 	}
-	.buttons{
+
+	.buttons {
 		display: flex;
 		gap: 4px;
 	}

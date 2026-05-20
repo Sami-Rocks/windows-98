@@ -1,20 +1,31 @@
-import Button from '../Button'
-import './style.scss'
-import StartIcon from './../../assets/images/Windows-Logos-PNG-Image-48558.png'
+// Modules
 import { useContext } from 'react'
+
+// Components
+import Button from '../Button'
+
+// Assets
+import StartIcon from './../../assets/images/Windows-Logos-PNG-Image-48558.png'
+
+// Context
 import { StartMenuContext, ActiveWindowContext } from '../../utilities/contexts'
+
+// Styles
+import './style.scss'
 
 type StatusBarType = {
 	onActivate: (file: FileType) => void,
 	openWindows: Array<FileType>
 }
 
-const StatusBar = ({ onActivate, openWindows }: StatusBarType) => {
-
+// Component: Status bar
+function StatusBar ({ onActivate, openWindows }: StatusBarType) {
+	// Context
 	const { startMenu, setStartMenu } = useContext(StartMenuContext)
 	const { activeWindow } = useContext(ActiveWindowContext)
 
-	const toggleStartMenu = () => {
+	// Functions
+	function toggleStartMenu () {
 		if (startMenu === false) {
 			setStartMenu(true)
 		} else {
@@ -22,10 +33,14 @@ const StatusBar = ({ onActivate, openWindows }: StatusBarType) => {
 		}
 	}
 
+	// Render
 	return (
 		<div className="status-bar">
 			<div className="start">
-				<Button title={'Start'} icon={StartIcon} onClick={toggleStartMenu}  />
+				<Button
+					title="Start"
+					icon={StartIcon}
+					onClick={toggleStartMenu} />
 			</div>
 			<div className="separator" />
 			<div className="buttons">
